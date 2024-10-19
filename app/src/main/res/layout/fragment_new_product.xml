@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.MyProducts.NewProduct.NewProductFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="75dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".ui.products.createproduct.view.CreateProductFragment">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/title_input"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/transparent"
+                android:textColor="@color/blue"
+                app:boxStrokeColor="@color/amper"
+                app:boxStrokeWidth="2dp"
+                app:boxStrokeWidthFocused="2dp"
+                app:endIconTint="@color/amper"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/title_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:autofillHints="name"
+                    android:hint="title"
+                    android:inputType="text"
+                    android:maxLength="40"
+                    android:padding="20dp"
+                    android:singleLine="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/description_input"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="458dp"
+                android:layout_height="116dp"
+
+                android:background="@android:color/transparent"
+                android:textColor="@color/amper"
+                app:boxStrokeColor="@color/amper"
+                app:boxStrokeWidth="2dp"
+                app:boxStrokeWidthFocused="2dp"
+                app:endIconTint="@color/amper"
+                app:layout_constraintEnd_toEndOf="@+id/title_input"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/title_input"
+                app:layout_constraintTop_toBottomOf="@+id/title_input">
+
+                <EditText
+                    android:id="@+id/description_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:autofillHints="name"
+                    android:hint="description body"
+                    android:inputType="text"
+                    android:maxLines="5"
+                    android:padding="2dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/brands_texts"
+                style="@style/Widget.MaterialComponents.TextInputEditText.FilledBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="choose the brand"
+                android:maxLength="40"
+                android:padding="20dp"
+                android:singleLine="true"
+                app:layout_constraintEnd_toEndOf="@+id/description_input"
+                app:layout_constraintStart_toStartOf="@+id/description_input"
+                app:layout_constraintTop_toBottomOf="@id/description_input" />
+
+            <Spinner
+                android:id="@+id/spinner_brand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/amper"
+                app:boxStrokeColor="@color/amper"
+                app:boxStrokeWidth="2dp"
+                app:boxStrokeWidthFocused="2dp"
+                app:endIconTint="@color/amper"
+                app:layout_constraintEnd_toEndOf="@+id/brands_texts"
+                app:layout_constraintStart_toStartOf="@+id/brands_texts"
+                app:layout_constraintTop_toBottomOf="@+id/brands_texts" />
+
+
+            <TextView
+                android:id="@+id/category_texts"
+                style="@style/Widget.MaterialComponents.TextInputEditText.FilledBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="37dp"
+
+                android:text="choose the category"
+                android:maxLength="40"
+                android:padding="20dp"
+                android:singleLine="true"
+                app:layout_constraintEnd_toEndOf="@+id/spinner_brand"
+                app:layout_constraintStart_toStartOf="@+id/spinner_brand"
+                app:layout_constraintTop_toTopOf="@+id/spinner_brand" />
+
+            <Spinner
+                android:id="@+id/spinner_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/amper"
+                app:boxStrokeColor="@color/amper"
+                app:boxStrokeWidth="2dp"
+                app:boxStrokeWidthFocused="2dp"
+                app:endIconTint="@color/amper"
+                app:layout_constraintEnd_toEndOf="@+id/category_texts"
+                app:layout_constraintStart_toStartOf="@+id/category_texts"
+                app:layout_constraintTop_toBottomOf="@+id/category_texts" />
+
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:visibility="gone"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="@+id/add_new_product_btn"
+                app:layout_constraintStart_toStartOf="@+id/add_new_product_btn"
+                app:layout_constraintTop_toBottomOf="@+id/add_specfications_btn" />
+
+
+            <Button
+                android:id="@+id/add_img_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_margin="16dp"
+                android:backgroundTint="@color/blue2"
+
+                android:paddingVertical="16dp"
+                android:text="add images for product"
+
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/spinner_category"
+                app:layout_constraintStart_toStartOf="@+id/spinner_category"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_category" />
+
+            <Button
+                android:id="@+id/add_specfications_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_margin="16dp"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/blue2"
+                android:paddingVertical="16dp"
+
+                android:text="add product Specifications"
+
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/add_img_btn"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/add_img_btn"
+                app:layout_constraintTop_toBottomOf="@+id/add_img_btn" />
+
+            <Button
+                android:id="@+id/add_new_product_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_margin="16dp"
+                android:backgroundTint="@color/amper"
+                android:paddingVertical="16dp"
+                android:text="add the product"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/add_specfications_btn"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/add_specfications_btn"
+                app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.e_commerceadmin.ui.home.myHome.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_allProductFragment"
+            app:destination="@id/allProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/allProductFragment"
+        android:name="com.example.e_commerceadmin.ui.home.MyProducts.allProd.AllProductFragment"
+        android:label="fragment_all_product"
+        tools:layout="@layout/fragment_all_product" >
+        <action
+            android:id="@+id/action_allProductFragment_to_newProductFragment"
+            app:destination="@id/newProductFragment" />
+        <action
+            android:id="@+id/action_allProductFragment_to_productInfoFragment"
+            app:destination="@id/productInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newProductFragment"
+        android:name="com.example.e_commerceadmin.ui.home.MyProducts.NewProduct.NewProductFragment"
+        android:label="fragment_new_product"
+        tools:layout="@layout/fragment_new_product" >
+        <argument
+            android:name="isUpdate"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="productItem"
+            app:argType="com.example.e_commerceadmin.model.ProductModel.ProductItem"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+    </fragment>
+    <fragment
+        android:id="@+id/productInfoFragment"
+        android:name="com.example.e_commerceadmin.ui.home.MyProducts.productinfo.ProductInfoFragment"
+        android:label="fragment_product_info"
+        tools:layout="@layout/fragment_product_info" >
+        <argument
+            android:name="prodDetails"
+            app:argType="com.example.e_commerceadmin.model.ProductModel.ProductItem" />
+        <action
+            android:id="@+id/action_productInfoFragment_to_newProductFragment"
+            app:destination="@id/newProductFragment" />
+    </fragment>
+</navigation>
