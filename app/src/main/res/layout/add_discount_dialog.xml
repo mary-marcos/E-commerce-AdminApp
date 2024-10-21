@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_of_image"
+        android:layout_width="371dp"
+        android:layout_height="187dp"
+        android:layout_marginHorizontal="20dp"
+
+        android:layout_marginTop="10dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/item_constrian_deatils"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/imgs_input"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@android:color/transparent"
+                android:textColor="@color/blue"
+                app:boxStrokeColor="@color/amper"
+                app:boxStrokeWidth="2dp"
+                app:boxStrokeWidthFocused="2dp"
+                app:endIconTint="@color/amper"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+                <EditText
+                    android:id="@+id/code_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:autofillHints="name"
+                    android:hint="discount code"
+                    android:inputType="text"
+                    android:padding="20dp"
+                    android:singleLine="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add DiscountCode"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/cancel_button"
+                android:layout_width="116dp"
+                android:layout_height="0dp"
+                android:layout_gravity="bottom"
+                android:layout_margin="16dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/blue2"
+                android:paddingVertical="16dp"
+                android:text="cancel"
+
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/imgs_input"
+                app:layout_constraintHorizontal_bias="0.846"
+                app:layout_constraintStart_toEndOf="@+id/add_toimgslist"
+                app:layout_constraintTop_toBottomOf="@+id/imgs_input" />
+
+            <Button
+                android:id="@+id/add_code"
+                android:layout_width="116dp"
+                android:layout_height="0dp"
+                android:layout_gravity="bottom"
+                android:layout_margin="16dp"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="@color/blue2"
+                android:paddingVertical="16dp"
+                android:text="add code"
+
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/imgs_input"
+                app:layout_constraintTop_toBottomOf="@+id/imgs_input" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

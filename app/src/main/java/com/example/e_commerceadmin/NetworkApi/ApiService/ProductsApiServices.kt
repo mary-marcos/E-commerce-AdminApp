@@ -1,6 +1,12 @@
 package com.example.e_commerceadmin.NetworkApi.ApiService
 
 import com.example.e_commerceadmin.constant.Constants
+import com.example.e_commerceadmin.model.CoponsModel.AllDiscountCodes
+import com.example.e_commerceadmin.model.CoponsModel.DiscountCodeRequest
+import com.example.e_commerceadmin.model.CoponsModel.DiscountCodeResponse
+import com.example.e_commerceadmin.model.CoponsModel.PriceRuleRequest
+import com.example.e_commerceadmin.model.CoponsModel.PriceRuleResponse
+import com.example.e_commerceadmin.model.CoponsModel.PriceRuleResponsePost
 import com.example.e_commerceadmin.model.ProductModel.AllProductResponse
 import com.example.e_commerceadmin.model.ProductModel.OneProductsResponse
 
@@ -36,12 +42,6 @@ interface ProductsApiServices {
   ): OneProductsResponse
 
 
-//  @Headers("Content-Type:application/json", "X-Shopify-Access-Token:"+ Constants.Access_Token)
-//  @PUT("products/{product_id}/images.json")
-//  suspend fun uploadImageToProduct(
-//    @Path("product_id") productId : Long,
-//    @Body body: SingleImageBody
-//  ): SingleImageResponse
 
 
   @Headers("Content-Type:application/json", "X-Shopify-Access-Token:"+ Constants.Access_Token)
@@ -50,6 +50,38 @@ interface ProductsApiServices {
     @Path("product_id") productId: Long?
   )
 
+/////////////////
+  //rules
+@Headers("Content-Type:application/json","X-Shopify-Access-Token:"+Constants.Access_Token)
+@GET("price_rules.json?")
+suspend fun getPriceRules(): PriceRuleResponse
 
+  @Headers("Content-Type:application/json","X-Shopify-Access-Token:"+Constants.Access_Token)
+  @POST("price_rules.json")
+  suspend fun createPriceRule( @Body body : PriceRuleRequest ): PriceRuleResponsePost
+
+  @Headers("Content-Type:application/json","X-Shopify-Access-Token:"+Constants.Access_Token)
+  @DELETE("price_rules/{price_rule_id}.json")
+  suspend fun deletePriceRule(
+    @Path("price_rule_id") ruleID : Long
+  )
+
+  @Headers("Content-Type:application/json","X-Shopify-Access-Token:"+Constants.Access_Token)
+  @PUT("price_rules/{price_rule_id}.json")
+  suspend fun updatePriceRule(
+    @Path("price_rule_id") ruleID : Long,
+    @Body body: PriceRuleResponsePost
+  ): PriceRuleResponsePost
+
+
+  /////////
+  //discount
+  @Headers("Content-Type:application/json","X-Shopify-Access-Token:"+Constants.Access_Token)
+  @GET("price_rules/{price_rule_id}/discount_codes.json")
+  suspend fun getDiscounts(@Path("price_rule_id") ruleID : Long): AllDiscountCodes
+
+  @Headers("Content-Type:application/json","X-Shopify-Access-Token:"+Constants.Access_Token)
+  @POST("price_rules/{price_rule_id}/discount_codes.json")
+  suspend fun createDiscountCode( @Path("price_rule_id") ruleID : Long, @Body body: DiscountCodeRequest): DiscountCodeResponse
 
 }

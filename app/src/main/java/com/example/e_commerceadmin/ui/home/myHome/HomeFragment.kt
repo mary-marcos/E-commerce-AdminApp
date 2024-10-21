@@ -51,6 +51,9 @@ class HomeFragment : Fragment() {
         binding.productCard.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_allProductFragment)
         }
+        binding.cardCoupons.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_allRulesFragment)
+        }
         observeCountOfProduct()
 
     }

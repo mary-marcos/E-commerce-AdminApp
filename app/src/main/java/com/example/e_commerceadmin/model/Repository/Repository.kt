@@ -1,6 +1,12 @@
 package com.example.e_commerceadmin.model.Repository
 
 import com.example.e_commerceadmin.NetworkApi.NetworkRetrofit
+import com.example.e_commerceadmin.model.CoponsModel.DiscountCode
+import com.example.e_commerceadmin.model.CoponsModel.DiscountCodeRequest
+import com.example.e_commerceadmin.model.CoponsModel.DiscountCodeResponse
+import com.example.e_commerceadmin.model.CoponsModel.PriceRule
+import com.example.e_commerceadmin.model.CoponsModel.PriceRuleRequest
+import com.example.e_commerceadmin.model.CoponsModel.PriceRuleResponsePost
 import com.example.e_commerceadmin.model.ProductModel.AllProductResponse
 import com.example.e_commerceadmin.model.ProductModel.OneProductsResponse
 
@@ -9,6 +15,7 @@ import com.example.e_commerceadmin.model.ProductModel.ProductBody
 import com.example.e_commerceadmin.model.RemoteData.productRemote.IRemoteProductDataSource
 import com.example.e_commerceadmin.model.RemoteData.productRemote.RemoteProductDataSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 class Repository( private val remoteproductSource: IRemoteProductDataSource,) {
 
@@ -50,7 +57,28 @@ class Repository( private val remoteproductSource: IRemoteProductDataSource,) {
     ): OneProductsResponse {
         return remoteproductSource.updateProduct(productId,product)
     }
+////////////////
+    suspend fun getPriceRules(): Flow<List<PriceRule>> {
+        return flowOf(remoteproductSource.getPriceRules())
+    }
 
+    suspend fun createPriceRules( rulerequest: PriceRuleRequest):PriceRuleResponsePost{
+        return remoteproductSource.createPriceRules(rulerequest)
+    }
+
+    suspend fun updatePriceRules(ruleID: Long, rulerequest: PriceRuleResponsePost):Flow<PriceRuleResponsePost>{
+        return flowOf(remoteproductSource.updatePriceRule(ruleID,rulerequest))
+
+    }
+
+    //////
+    suspend fun getDiscounts(ruleID: Long):Flow<List<DiscountCode>>{
+        return flowOf(remoteproductSource.getDiscounts(ruleID))
+    }
+
+    suspend fun createDiscount(ruleID: Long,rulerequest: DiscountCodeRequest):DiscountCodeResponse{
+        return  remoteproductSource.createDiscount(ruleID,rulerequest)
+    }
 }
 
 

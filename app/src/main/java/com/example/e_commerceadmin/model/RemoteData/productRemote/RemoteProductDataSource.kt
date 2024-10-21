@@ -2,6 +2,13 @@ package com.example.e_commerceadmin.model.RemoteData.productRemote
 
 import com.example.e_commerceadmin.NetworkApi.ApiService.ProductsApiServices
 import com.example.e_commerceadmin.NetworkApi.NetworkRetrofit
+import com.example.e_commerceadmin.model.CoponsModel.DiscountCode
+import com.example.e_commerceadmin.model.CoponsModel.DiscountCodeRequest
+import com.example.e_commerceadmin.model.CoponsModel.DiscountCodeResponse
+import com.example.e_commerceadmin.model.CoponsModel.PriceRule
+import com.example.e_commerceadmin.model.CoponsModel.PriceRuleRequest
+import com.example.e_commerceadmin.model.CoponsModel.PriceRuleResponse
+import com.example.e_commerceadmin.model.CoponsModel.PriceRuleResponsePost
 import com.example.e_commerceadmin.model.ProductModel.OneProductsResponse
 import com.example.e_commerceadmin.model.ProductModel.ProductBody
 import kotlinx.coroutines.flow.Flow
@@ -48,5 +55,31 @@ class RemoteProductDataSource(private val productService: ProductsApiServices) :
         productService.deleteProduct(productId)
     }
 
+    /////////////////
+  //  rules
+    override suspend fun getPriceRules(): List<PriceRule>{
+        return productService.getPriceRules().priceRules
+    }
 
+    override suspend fun createPriceRules(rulerequest:PriceRuleRequest):PriceRuleResponsePost{
+        return productService.createPriceRule(rulerequest)
+    }
+
+    override suspend fun updatePriceRule(ruleID: Long, body: PriceRuleResponsePost): PriceRuleResponsePost {
+        return productService.updatePriceRule(ruleID,body)
+    }
+
+//    override suspend fun drleteRule(){
+//        return productService.deletePriceRule()
+//    }
+
+    ////////
+    //dis
+    override suspend fun getDiscounts(ruleID : Long): List<DiscountCode>{
+        return productService.getDiscounts(ruleID).discount_codes
+    }
+
+    override suspend fun createDiscount(ruleID : Long,rulerequest:DiscountCodeRequest):DiscountCodeResponse{
+        return productService.createDiscountCode(ruleID,rulerequest)
+    }
 }
