@@ -16,12 +16,37 @@ class AllRulesViewModel (var repo: Repository): ViewModel() {
     private val _allRules = MutableStateFlow<UiState<List<PriceRule>>>(UiState.Loading())
     val allRules: StateFlow<UiState<List<PriceRule>>> = _allRules
 
-
+    private var _deleteDiscount: MutableStateFlow<UiState<String>> = MutableStateFlow(
+        UiState.Loading()
+    )
+    var deleteRule: StateFlow<UiState<String>> = _deleteDiscount
     init {
         getAllRules()
     }
 
-    private fun getAllRules() {
+
+
+
+
+    fun deleteRule(ruleID:Long) {
+        viewModelScope.launch {
+
+            try{
+                repo.deleteRule(ruleID)
+                _deleteDiscount.value= UiState.Success("deleted successfully" )
+
+            }
+
+            catch (e: Exception) {
+                Log.d("TAG", "createrule:${e.message} ")
+                _deleteDiscount.value = UiState.Failed(e)
+            }
+
+
+        }
+    }
+
+     fun getAllRules() {
         viewModelScope.launch {
             repo.getPriceRules()
                 .catch { e ->

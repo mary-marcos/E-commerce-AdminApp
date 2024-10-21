@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBindings
 import com.example.e_commerceadmin.R
 import com.example.e_commerceadmin.databinding.FragmentAllDiscountsBinding
 import com.example.e_commerceadmin.databinding.FragmentAllRulesBinding
@@ -31,6 +32,7 @@ import com.example.e_commerceadmin.ui.home.coupons.RulesPrice.viewnodel.AllRules
 import com.example.e_commerceadmin.ui.home.coupons.RulesPrice.viewnodel.AllRulesViewModel
 import com.example.e_commerceadmin.ui.home.coupons.zDiscounts.ViewMode.DiscountFactory
 import com.example.e_commerceadmin.ui.home.coupons.zDiscounts.ViewMode.DiscountViewMode
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlin.random.Random
@@ -77,7 +79,9 @@ class AllDiscountsFragment : Fragment() {
 //                findNavController().navigate(action)
             },
 
-            onDeleteClick = { ruleItem ->
+            onDeleteClick = { disItem ->
+                observeDeleteDisc()
+                viewModel.deleteDiscount(ruleIdd,disItem.id?:0L)
             }
         )
 
@@ -96,12 +100,50 @@ class AllDiscountsFragment : Fragment() {
        viewModel.getAllDiscounts(ruleIdd)
 
         binding.addFloatingBtn.setOnClickListener {
-            observingCreateCoupone()
+
             showCreateDiscountDialog()
         }
 
     }
 
+
+
+
+
+    private fun observeDeleteDisc() {
+
+
+
+        lifecycleScope.launch {
+            viewModel.deleteDiscount.collectLatest{
+                when (it) {
+                    is UiState.Loading -> {
+                        binding.progressbar.visibility = View.VISIBLE
+                    }
+                    is UiState.Success -> {
+                        binding.progressbar.visibility = View.GONE
+                        val snackbar = Snackbar.make(
+                            requireView(),
+                            it.data,
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
+                        viewModel.getAllDiscounts(ruleIdd)
+
+                    }
+                    else -> {
+                        binding.progressbar.visibility = View.GONE
+                        val snackbar = Snackbar.make(
+                            requireView(),
+                           "faile to delete",
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
+                    }
+                }
+            }
+        }
+    }
     private fun observeGetAllDiscounts() {
 
 
@@ -134,11 +176,25 @@ class AllDiscountsFragment : Fragment() {
                     }
                     is UiState.Success -> {
                         binding.progressbar.visibility = View.GONE
-                        Toast.makeText(requireContext(),"success add code coupone ",Toast.LENGTH_SHORT).show()
+                        val snackbar = Snackbar.make(
+                            requireView(),
+                            "Coupon added successfully",
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
+                        viewModel.getAllDiscounts(ruleIdd)
+
+                      //  Toast.makeText(requireContext(),"success add code coupone ",Toast.LENGTH_SHORT).show()
 
                     }
                     else -> {
-                        Toast.makeText(requireContext(),"fail get all discounts",Toast.LENGTH_SHORT).show()
+                        val snackbar = Snackbar.make(
+                            requireView(),
+                            "add Coupon failed",
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
+                      //  Toast.makeText(requireContext(),"fail get all discounts",Toast.LENGTH_SHORT).show()
                         binding.progressbar.visibility = View.GONE
                     }
                 }
@@ -172,6 +228,7 @@ class AllDiscountsFragment : Fragment() {
             var dialogImageView = findViewById<Button>(R.id.add_code)
             dialogImageView?.setOnClickListener {
                 if(!addedCode.text.isNullOrBlank()){
+                    observingCreateCoupone()
 
                    viewModel.createCoupones(ruleIdd, DiscountCodeRequest(OneItemCode(addedCode.text.toString())))
 

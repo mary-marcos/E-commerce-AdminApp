@@ -21,6 +21,12 @@ class DiscountViewMode (var repo: Repository): ViewModel() {
     private val _createcopon = MutableStateFlow<UiState<DiscountCodeResponse>>(UiState.Loading())
     val createcopon: StateFlow<UiState<DiscountCodeResponse>> = _createcopon
 
+
+    private var _deleteDiscount: MutableStateFlow<UiState<String>> = MutableStateFlow(
+        UiState.Loading()
+    )
+    var deleteDiscount: StateFlow<UiState<String>> = _deleteDiscount
+
     private val _allDiscounts = MutableStateFlow<UiState<List<DiscountCode>>>(UiState.Loading())
     val allDiscounts: StateFlow<UiState<List<DiscountCode>>> = _allDiscounts
 
@@ -37,6 +43,24 @@ class DiscountViewMode (var repo: Repository): ViewModel() {
                 .collect { productList ->
                     _allDiscounts.value = UiState.Success(productList)
                 }
+        }
+    }
+
+    fun deleteDiscount(ruleID:Long,disId:Long) {
+        viewModelScope.launch {
+
+            try{
+                repo.deleteDiscount(ruleID,disId)
+                _deleteDiscount.value= UiState.Success("deleted successfully" )
+
+            }
+
+            catch (e: Exception) {
+                Log.d("TAG", "createrule:${e.message} ")
+                _deleteDiscount.value = UiState.Failed(e)
+            }
+
+
         }
     }
 

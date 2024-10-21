@@ -17,12 +17,44 @@ class AllProdViewModel(var repo:Repository):ViewModel() {
     private val _allProduct = MutableStateFlow<UiState<AllProductResponse>>(UiState.Loading())
     val allProduct: StateFlow<UiState<AllProductResponse>> = _allProduct
 
+    private var _deleteProd: MutableStateFlow<UiState<String>> = MutableStateFlow(
+        UiState.Loading()
+    )
+    var deleteprod: StateFlow<UiState<String>> = _deleteProd
+
+
+
 
     init {
         getAllProduct()
     }
 
-    private fun getAllProduct() {
+
+
+
+
+
+
+    fun deleteProd(prodID:Long) {
+        viewModelScope.launch {
+
+            try{
+                repo.deleteProduct(prodID)
+                _deleteProd.value= UiState.Success("deleted successfully" )
+
+            }
+
+            catch (e: Exception) {
+                Log.d("TAG", "createrule:${e.message} ")
+                _deleteProd.value = UiState.Failed(e)
+            }
+
+
+        }
+    }
+
+
+     fun getAllProduct() {
         viewModelScope.launch {
             repo.getAllProducts()
                 .catch { e ->

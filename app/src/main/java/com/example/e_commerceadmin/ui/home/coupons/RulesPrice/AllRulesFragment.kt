@@ -24,6 +24,7 @@ import com.example.e_commerceadmin.ui.home.MyProducts.allProd.viewmodel_allprodu
 import com.example.e_commerceadmin.ui.home.MyProducts.allProd.viewmodel_allproduct.AllProdViewModel
 import com.example.e_commerceadmin.ui.home.coupons.RulesPrice.viewnodel.AllRulesFactory
 import com.example.e_commerceadmin.ui.home.coupons.RulesPrice.viewnodel.AllRulesViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -38,7 +39,10 @@ class AllRulesFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
     }
-
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllRules()
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,6 +73,8 @@ class AllRulesFragment : Fragment() {
             },
 
             onDeleteClick = { ruleItem ->
+                observeDeleteRule()
+                viewModel.deleteRule(ruleItem.id?:0L)
             }
         )
 
@@ -99,6 +105,41 @@ class AllRulesFragment : Fragment() {
                     }
                     else -> {
                         binding.progressbar.visibility = View.GONE
+                    }
+                }
+            }
+        }
+    }
+
+    private fun observeDeleteRule() {
+
+
+
+        lifecycleScope.launch {
+            viewModel.deleteRule.collectLatest{
+                when (it) {
+                    is UiState.Loading -> {
+                        binding.progressbar.visibility = View.VISIBLE
+                    }
+                    is UiState.Success -> {
+                        binding.progressbar.visibility = View.GONE
+                        val snackbar = Snackbar.make(
+                            requireView(),
+                            it.data,
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
+                        viewModel.getAllRules()
+
+                    }
+                    else -> {
+                        binding.progressbar.visibility = View.GONE
+                        val snackbar = Snackbar.make(
+                            requireView(),
+                            "faile to delete",
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
                     }
                 }
             }

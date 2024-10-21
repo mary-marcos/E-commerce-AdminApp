@@ -42,9 +42,6 @@ class AllDisAdapter(val onClick:(DiscountCode)-> Unit,
 
 
         holder.binding.titleTextview.text = current.code
-        holder.binding.usageCountTextview.text = current.usageCount.toString()
-
-
 
 
         holder.binding.ruleCardView.setOnClickListener {

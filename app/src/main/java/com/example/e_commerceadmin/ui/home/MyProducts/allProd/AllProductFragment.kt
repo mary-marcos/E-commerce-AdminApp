@@ -22,6 +22,8 @@ import com.example.e_commerceadmin.model.UiState
 import com.example.e_commerceadmin.ui.home.MyProducts.allProd.viewmodel_allproduct.AllProdFactory
 import com.example.e_commerceadmin.ui.home.MyProducts.allProd.viewmodel_allproduct.AllProdViewModel
 import com.example.e_commerceadmin.ui.home.myHome.viewModel_home.HomeViewModel
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -54,6 +56,11 @@ class AllProductFragment : Fragment() {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllProduct()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -67,7 +74,8 @@ class AllProductFragment : Fragment() {
 
             },
             onDeleteClick = { productItem ->
-
+                observeDeleteProd()
+           viewModel.deleteProd(productItem.id?:0L)
             }
         )
         binding.floatAddNewProd.setOnClickListener {
@@ -130,5 +138,42 @@ class AllProductFragment : Fragment() {
             }
         }
     }
+
+    private fun observeDeleteProd() {
+
+
+
+        lifecycleScope.launch {
+            viewModel.deleteprod.collectLatest{
+                when (it) {
+                    is UiState.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is UiState.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        viewModel.getAllProduct()
+                        val snackbar = Snackbar.make(
+                            requireView(),
+                            it.data,
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
+
+                    }
+                    else -> {
+                        binding.progressBar.visibility = View.GONE
+                        val snackbar = Snackbar.make(
+                            requireView(),
+                            "faile to delete",
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
+                    }
+                }
+            }
+        }
+    }
+
+
 
 }

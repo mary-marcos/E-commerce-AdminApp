@@ -1,12 +1,14 @@
 package com.example.e_commerceadmin.model.Repository
 
 import com.example.e_commerceadmin.NetworkApi.NetworkRetrofit
+
 import com.example.e_commerceadmin.model.CoponsModel.DiscountCode
 import com.example.e_commerceadmin.model.CoponsModel.DiscountCodeRequest
 import com.example.e_commerceadmin.model.CoponsModel.DiscountCodeResponse
 import com.example.e_commerceadmin.model.CoponsModel.PriceRule
 import com.example.e_commerceadmin.model.CoponsModel.PriceRuleRequest
 import com.example.e_commerceadmin.model.CoponsModel.PriceRuleResponsePost
+import com.example.e_commerceadmin.model.CustomersByEmailResponse
 import com.example.e_commerceadmin.model.ProductModel.AllProductResponse
 import com.example.e_commerceadmin.model.ProductModel.OneProductsResponse
 
@@ -15,7 +17,9 @@ import com.example.e_commerceadmin.model.ProductModel.ProductBody
 import com.example.e_commerceadmin.model.RemoteData.productRemote.IRemoteProductDataSource
 import com.example.e_commerceadmin.model.RemoteData.productRemote.RemoteProductDataSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import retrofit2.Response
 
 class Repository( private val remoteproductSource: IRemoteProductDataSource,) {
 
@@ -43,12 +47,21 @@ class Repository( private val remoteproductSource: IRemoteProductDataSource,) {
         return remoteproductSource.getAllProducts()
     }
 
+        fun getCustomerByEmail(email:String): Flow<CustomersByEmailResponse> {
+        return remoteproductSource.getCustomerByEmail(email)
+
+    }
+
+//     fun getUsers(): Flow<AllUsersResponse> {
+//         return remoteproductSource.getUsers()
+//    }
+
      suspend fun createProduct(body: ProductBody): OneProductsResponse {
         return remoteproductSource.postProduct(body)
     }
 
-     suspend fun deleteProduct(productId: Long?) {
-         remoteproductSource.deleteProduct(productId)
+     suspend fun deleteProduct(productId: Long?):Response<Unit> {
+      return   remoteproductSource.deleteProduct(productId)
     }
 
     suspend fun updateProduct(
@@ -70,6 +83,10 @@ class Repository( private val remoteproductSource: IRemoteProductDataSource,) {
         return flowOf(remoteproductSource.updatePriceRule(ruleID,rulerequest))
 
     }
+    suspend fun deleteRule(ruleID : Long):Response<Unit>{
+        return remoteproductSource.drleteRule(ruleID)
+    }
+//
 
     //////
     suspend fun getDiscounts(ruleID: Long):Flow<List<DiscountCode>>{
@@ -79,6 +96,17 @@ class Repository( private val remoteproductSource: IRemoteProductDataSource,) {
     suspend fun createDiscount(ruleID: Long,rulerequest: DiscountCodeRequest):DiscountCodeResponse{
         return  remoteproductSource.createDiscount(ruleID,rulerequest)
     }
+
+
+     suspend fun deleteDiscount(ruleID: Long, discountId: Long):Response<Unit>
+     {
+
+         return remoteproductSource.deleteDiscount(ruleID, discountId)
+
+     }
+
+
+
 }
 
 

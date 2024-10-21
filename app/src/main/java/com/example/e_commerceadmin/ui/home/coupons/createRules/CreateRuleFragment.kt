@@ -29,6 +29,7 @@ import com.example.e_commerceadmin.ui.home.coupons.RulesPrice.viewnodel.AllRules
 import com.example.e_commerceadmin.ui.home.coupons.RulesPrice.viewnodel.AllRulesViewModel
 import com.example.e_commerceadmin.ui.home.coupons.createRules.viewModel.CreateRuleFactory
 import com.example.e_commerceadmin.ui.home.coupons.createRules.viewModel.CreateRuleviewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.text.ParseException
@@ -80,12 +81,13 @@ class CreateRuleFragment : Fragment() {
 
         binding.addRuleBtn.setOnClickListener {
             if (isDataValidate()) {
+                observeingRule()
                 viewModel.createRulesf(PriceRuleRequest(createNewRule()))
 
             }
         }
 
-        observeingRule()
+
         DatePricker()
          TimePicker()
         setselectedItemsList()
@@ -188,15 +190,25 @@ class CreateRuleFragment : Fragment() {
                     is UiState.Success -> {
                         Toast.makeText(requireContext(),"rule created successfully",Toast.LENGTH_SHORT).show()
                        binding.progressBar2.visibility = View.GONE
-                        Toast.makeText(requireContext(),"Created Rule successfully",Toast.LENGTH_SHORT).show()
+                     //   Toast.makeText(requireContext(),"Created Rule successfully",Toast.LENGTH_SHORT).show()
 
-
+                        val snackbar = Snackbar.make(
+                            requireView(),
+                            "Created Rule successfully",
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
 
                     }
                     is UiState.Failed -> {
                        binding.progressBar2.visibility = View.GONE
-                      Toast.makeText(requireContext(),"failed to upload",Toast.LENGTH_SHORT).show()
-                    }
+                        val snackbar = Snackbar.make(
+                            requireView(),
+                            "faile to Created Rule ",
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
+                   }
                 }
             }
         }

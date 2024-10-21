@@ -30,15 +30,6 @@ class updateRuleViewModel(var repo: Repository): ViewModel() {
             }
         }
 
-//        {
-//            try {
-//                val newRule = repo.updatePriceRules(ruleid,rulerequest)
-//                _updateRule.value = UiState.Success(newRule)
-//            } catch (e: Exception) {
-//                Log.d("TAG", "createrule:${e.message} ")
-//                _updateRule.value = UiState.Failed(e)
-//                Log.d("TAG", "updateruleF:$e ")
-//            }
-//        }
+
     }
 }

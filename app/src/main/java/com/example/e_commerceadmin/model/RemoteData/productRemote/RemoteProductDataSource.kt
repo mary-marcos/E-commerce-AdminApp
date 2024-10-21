@@ -9,11 +9,13 @@ import com.example.e_commerceadmin.model.CoponsModel.PriceRule
 import com.example.e_commerceadmin.model.CoponsModel.PriceRuleRequest
 import com.example.e_commerceadmin.model.CoponsModel.PriceRuleResponse
 import com.example.e_commerceadmin.model.CoponsModel.PriceRuleResponsePost
+import com.example.e_commerceadmin.model.CustomersByEmailResponse
 import com.example.e_commerceadmin.model.ProductModel.OneProductsResponse
 import com.example.e_commerceadmin.model.ProductModel.ProductBody
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-
+import retrofit2.Response
+import retrofit2.http.Path
 
 
 class RemoteProductDataSource(private val productService: ProductsApiServices) :
@@ -40,6 +42,16 @@ class RemoteProductDataSource(private val productService: ProductsApiServices) :
         emit(productService.getProducts())
     }
 
+    override   fun getCustomerByEmail(email:String)= flow{
+        emit(productService.getCustomerByEmail(email))
+
+    }
+
+//    override fun getUsers()= flow {
+//        emit(productService.getUsers())
+
+
+
 
 
     override suspend fun postProduct(body: ProductBody): OneProductsResponse {
@@ -51,8 +63,8 @@ class RemoteProductDataSource(private val productService: ProductsApiServices) :
         return productService.updateProduct(productId, product)
     }
 
-    override suspend fun deleteProduct(productId: Long?) {
-        productService.deleteProduct(productId)
+    override suspend fun deleteProduct(productId: Long?) :Response<Unit>{
+      return  productService.deleteProduct(productId)
     }
 
     /////////////////
@@ -69,9 +81,10 @@ class RemoteProductDataSource(private val productService: ProductsApiServices) :
         return productService.updatePriceRule(ruleID,body)
     }
 
-//    override suspend fun drleteRule(){
-//        return productService.deletePriceRule()
-//    }
+    override suspend fun drleteRule(ruleID : Long):Response<Unit>{
+        return productService.deletePriceRule(ruleID)
+    }
+    /////
 
     ////////
     //dis
@@ -81,5 +94,10 @@ class RemoteProductDataSource(private val productService: ProductsApiServices) :
 
     override suspend fun createDiscount(ruleID : Long,rulerequest:DiscountCodeRequest):DiscountCodeResponse{
         return productService.createDiscountCode(ruleID,rulerequest)
+    }
+
+
+    override  suspend fun deleteDiscount(ruleID : Long, discountId : Long):Response<Unit>{
+        return productService.deleteDiscount(ruleID,discountId)
     }
 }

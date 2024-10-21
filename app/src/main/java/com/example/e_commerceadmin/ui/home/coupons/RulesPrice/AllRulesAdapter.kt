@@ -59,8 +59,6 @@ class AllRulesAdapter (val onClick:(PriceRule)-> Unit,
 
         holder.binding.ruleCardView.setOnClickListener {
             onItemClicked(current.id?:0L)
-//            holder.binding.root.findNavController()
-//                .navigate(AllRulesFragmentDirections.actionAllRulesFragmentToAllCoupons(current))
 
         }
         holder.binding.editImage.setOnClickListener {

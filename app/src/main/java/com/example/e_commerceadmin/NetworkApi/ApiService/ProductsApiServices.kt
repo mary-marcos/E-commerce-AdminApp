@@ -7,11 +7,13 @@ import com.example.e_commerceadmin.model.CoponsModel.DiscountCodeResponse
 import com.example.e_commerceadmin.model.CoponsModel.PriceRuleRequest
 import com.example.e_commerceadmin.model.CoponsModel.PriceRuleResponse
 import com.example.e_commerceadmin.model.CoponsModel.PriceRuleResponsePost
+import com.example.e_commerceadmin.model.CustomersByEmailResponse
 import com.example.e_commerceadmin.model.ProductModel.AllProductResponse
 import com.example.e_commerceadmin.model.ProductModel.OneProductsResponse
 
 import com.example.e_commerceadmin.model.ProductModel.ProdCountResponse
 import com.example.e_commerceadmin.model.ProductModel.ProductBody
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -19,6 +21,7 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ProductsApiServices {
   @Headers("Content-Type:application/json", "X-Shopify-Access-Token:"+ Constants.Access_Token)
@@ -48,7 +51,7 @@ interface ProductsApiServices {
   @DELETE("products/{product_id}.json")
   suspend fun deleteProduct(
     @Path("product_id") productId: Long?
-  )
+  ): Response<Unit>
 
 /////////////////
   //rules
@@ -64,7 +67,7 @@ suspend fun getPriceRules(): PriceRuleResponse
   @DELETE("price_rules/{price_rule_id}.json")
   suspend fun deletePriceRule(
     @Path("price_rule_id") ruleID : Long
-  )
+  ): Response<Unit>
 
   @Headers("Content-Type:application/json","X-Shopify-Access-Token:"+Constants.Access_Token)
   @PUT("price_rules/{price_rule_id}.json")
@@ -83,5 +86,27 @@ suspend fun getPriceRules(): PriceRuleResponse
   @Headers("Content-Type:application/json","X-Shopify-Access-Token:"+Constants.Access_Token)
   @POST("price_rules/{price_rule_id}/discount_codes.json")
   suspend fun createDiscountCode( @Path("price_rule_id") ruleID : Long, @Body body: DiscountCodeRequest): DiscountCodeResponse
+
+  @Headers("Content-Type:application/json","X-Shopify-Access-Token:"+Constants.Access_Token)
+  @DELETE("price_rules/{price_rule_id}/discount_codes/{discount_code_id}.json")
+  suspend fun deleteDiscount(
+    @Path("price_rule_id") ruleID : Long,
+    @Path("discount_code_id") discountId : Long,
+  ): Response<Unit>
+
+  ////
+  //auth
+
+  @Headers("Content-Type:application/json", "X-Shopify-Access-Token:"+ Constants.Access_Token)
+  @GET("customers/search.json")
+  suspend fun getCustomerByEmail(
+    @Query("query") emailQuery: String
+  ): CustomersByEmailResponse
+
+
+//
+//  @Headers("Content-Type:application/json", "X-Shopify-Access-Token:"+ Constants.Access_Token)
+//  @GET("customers.json")
+//  suspend fun getUsers(): AllUsersResponse
 
 }

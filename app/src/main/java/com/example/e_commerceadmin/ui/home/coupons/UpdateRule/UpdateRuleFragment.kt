@@ -34,6 +34,7 @@ import com.example.e_commerceadmin.ui.home.coupons.UpdateRule.viewModel.ViewMode
 import com.example.e_commerceadmin.ui.home.coupons.UpdateRule.viewModel.updateRuleViewModel
 import com.example.e_commerceadmin.ui.home.coupons.createRules.viewModel.CreateRuleFactory
 import com.example.e_commerceadmin.ui.home.coupons.createRules.viewModel.CreateRuleviewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.text.ParseException
@@ -88,7 +89,7 @@ class UpdateRuleFragment : Fragment() {
         rulePriceData=args.priceRuleData
         setDatatoUi(args.priceRuleData)
 
-        observeingRule()
+
         DatePricker()
         TimePicker()
         setselectedItemsList()
@@ -98,6 +99,7 @@ class UpdateRuleFragment : Fragment() {
 
             binding.addRuleBtn.setOnClickListener {
                 if (isDataValidate()) {
+                    observeingRule()
                     updateRule()
 
 
@@ -215,7 +217,13 @@ class UpdateRuleFragment : Fragment() {
 
                     }
                     is UiState.Success -> {
-                        Toast.makeText(requireContext(),"rule created successfully", Toast.LENGTH_SHORT).show()
+                        val snackbar = Snackbar.make(
+                            requireView(),
+                            "rule updated successfully",
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
+                       // Toast.makeText(requireContext(),"rule updated successfully", Toast.LENGTH_SHORT).show()
                         binding.progressBar2.visibility = View.GONE
                         Toast.makeText(requireContext(),"Created Rule successfully", Toast.LENGTH_SHORT).show()
 
@@ -224,7 +232,13 @@ class UpdateRuleFragment : Fragment() {
                     }
                     is UiState.Failed -> {
                         binding.progressBar2.visibility = View.GONE
-                        Toast.makeText(requireContext(),"failed to upload", Toast.LENGTH_SHORT).show()
+                        val snackbar = Snackbar.make(
+                            requireView(),
+                            "update rule failed",
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
+                      //  Toast.makeText(requireContext(),"failed to upload", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

@@ -19,8 +19,6 @@ class CreateRuleviewModel (var repo: Repository): ViewModel() {
     val createRule: StateFlow<UiState<PriceRuleResponsePost>> = _createRule
 
 
-
-
     fun createRulesf(rulerequest: PriceRuleRequest) {
         viewModelScope.launch {
             try {
