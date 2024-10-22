@@ -44,6 +44,7 @@ import com.example.e_commerceadmin.ui.home.MyProducts.NewProduct.viewmodel.Updat
 import com.example.e_commerceadmin.ui.home.MyProducts.allProd.AllProductAdapter
 import com.example.e_commerceadmin.ui.home.MyProducts.allProd.viewmodel_allproduct.AllProdFactory
 import com.example.e_commerceadmin.ui.home.MyProducts.allProd.viewmodel_allproduct.AllProdViewModel
+import com.google.android.material.snackbar.Snackbar
 
 import kotlin.random.Random
 
@@ -118,6 +119,7 @@ class NewProductFragment : Fragment() {
     }
 
     private fun stupDataToUpdate(product:ProductItem?) {
+        binding.addNewProductBtn.text = "Update"
         binding.titleText.setText(product?.title)
 
         binding.descriptionEt.setText(product?.bodyHtml)
@@ -249,6 +251,7 @@ val time=GetTime.getCurrentTime()
     }
 
     private fun showAddImageDialog() {
+        lateinit var imgadapter: ImagesAdapter
         dialog = Dialog(requireActivity()).apply {
 
             requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -271,7 +274,16 @@ val time=GetTime.getCurrentTime()
 
             recyclerimg.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-            val imgadapter = ImagesAdapter()
+            imgadapter = ImagesAdapter(
+                onDeleteClick = { imgItem ->
+
+                    val position = images.indexOf(imgItem)
+                    if (position != -1) {
+                        images.removeAt(position)
+                        imgadapter.notifyItemRemoved(position)
+                    }
+                }
+            )
             recyclerimg.adapter = imgadapter
 
             imgadapter.submitList(images)
@@ -303,6 +315,7 @@ val time=GetTime.getCurrentTime()
     }
 
     private fun showAddvariantsDialog(broductItem:ProductItem?) {
+        lateinit var  vatiantadapte:variantAdapter
         dialogvariant = Dialog(requireActivity()).apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             setCancelable(false)
@@ -326,10 +339,20 @@ val time=GetTime.getCurrentTime()
 
             recyclervariant.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-            val vatiantadapter = variantAdapter()
-            recyclervariant.adapter = vatiantadapter
+            vatiantadapte = variantAdapter(
+                onDeleteClick = {  variantsItem ->
 
-            vatiantadapter.submitList(variantsList)
+                    val position = variantsList.indexOf(variantsItem)
+                    if (position != -1) {
+                        variantsList.removeAt(position)
+
+                        vatiantadapte.notifyItemRemoved(position)
+                    }
+                }
+            )
+            recyclervariant.adapter = vatiantadapte
+
+            vatiantadapte.submitList(variantsList)
 
 
 
@@ -383,8 +406,8 @@ val time=GetTime.getCurrentTime()
                     color.text.clear()
                     price.text.clear()
                     quantity.text.clear()
-                    vatiantadapter.submitList(variantsList.toList())
-                    vatiantadapter.notifyDataSetChanged()
+                    vatiantadapte.submitList(variantsList.toList())
+                    vatiantadapte.notifyDataSetChanged()
                 }else {
                     price.error = "price required"
                 }
@@ -403,18 +426,26 @@ val time=GetTime.getCurrentTime()
                         binding.progressBar.visibility = View.VISIBLE
                     }
                     is UiState.Success -> {
-                        // Handle success state
+
                         binding.progressBar.visibility = View.GONE
-                        Toast.makeText(requireContext(),"Product Created Successfully",Toast.LENGTH_SHORT).show()
-                      //  findNavController().navigate(R.id.action_createProductFragment_to_home)
-                       // makeAlert("Product Created Successfully", "Creating new Product to our store is done")
+                       // Toast.makeText(requireContext(),"Product Created Successfully",Toast.LENGTH_SHORT).show()
+                        val snackbar = Snackbar.make(
+                            requireView(),
+                            "Product Created Successfully",
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
                     }
                     is UiState.Failed -> {
                         // Handle error state
                         binding.progressBar.visibility = View.GONE
-                        Toast.makeText(requireContext(),"Failed to create product",Toast.LENGTH_SHORT).show()
-
-                        //  makeAlert("Failed to create product", "Make sure about your connection to create new Product.")
+                     //   Toast.makeText(requireContext(),"Failed to create product",Toast.LENGTH_SHORT).show()
+                        val snackbar = Snackbar.make(
+                            requireView(),
+                            "Failed to create product",
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
                     }
                 }
             }
@@ -428,18 +459,26 @@ val time=GetTime.getCurrentTime()
                         binding.progressBar.visibility = View.VISIBLE
                     }
                     is UiState.Success -> {
-                        // Handle success state
+
                         binding.progressBar.visibility = View.GONE
-                        Toast.makeText(requireContext(),"Product updated Successfully",Toast.LENGTH_SHORT).show()
-                        //  findNavController().navigate(R.id.action_createProductFragment_to_home)
-                        // makeAlert("Product Created Successfully", "Creating new Product to our store is done")
+                       // Toast.makeText(requireContext(),"Product updated Successfully",Toast.LENGTH_SHORT).show()
+                        val snackbar = Snackbar.make(
+                            requireView(),
+                            "Product updated Successfully",
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
                     }
                     is UiState.Failed -> {
                         // Handle error state
                         binding.progressBar.visibility = View.GONE
-                        Toast.makeText(requireContext(),"Failed to update product",Toast.LENGTH_SHORT).show()
-
-                        //  makeAlert("Failed to create product", "Make sure about your connection to create new Product.")
+                       // Toast.makeText(requireContext(),"Failed to update product",Toast.LENGTH_SHORT).show()
+                        val snackbar = Snackbar.make(
+                            requireView(),
+                            "Failed to update product",
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.show()
                     }
                 }
             }

@@ -175,7 +175,7 @@
                 android:layout_margin="16dp"
                 android:backgroundTint="@color/blue2"
                 android:paddingVertical="16dp"
-
+                android:textColor="@color/white"
                 android:text="confirm"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/add_tovariantlist"
@@ -194,7 +194,7 @@
                 android:paddingVertical="16dp"
                 android:text="add variant"
                 android:textStyle="bold"
-
+                android:textColor="@color/white"
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

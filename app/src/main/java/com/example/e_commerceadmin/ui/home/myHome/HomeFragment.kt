@@ -55,9 +55,60 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_homeFragment_to_allRulesFragment)
         }
         observeCountOfProduct()
+        observeCountOfInventories()
+        observeCountOfRules()
 
     }
+    private fun observeCountOfRules(){
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.ruleCount.collect { uiState ->
+                when (uiState) {
+                    is UiState.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                        binding.cardCoupons.visibility = View.GONE
+                    }
+                    is UiState.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        binding.cardCoupons.visibility = View.VISIBLE
+                        binding.countCouponsValue.text = uiState.data.count.toString()
+                    }
+                    is UiState.Failed -> {
+                        binding.progressBar.visibility = View.GONE
+                        binding.cardCoupons.visibility = View.VISIBLE
+                        Toast.makeText(requireContext(),"faild",Toast.LENGTH_SHORT).show()
+                        Log.e ("HomeFragment","Error: ${uiState.msg.message}")
+                    }
+                }
+            }
+        }
+    }
+
+
+    private fun observeCountOfInventories(){
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.inventoryCount.collect { uiState ->
+                when (uiState) {
+                    is UiState.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                        binding.cardInventory.visibility = View.GONE
+                    }
+                    is UiState.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        binding.cardInventory.visibility = View.VISIBLE
+                        binding.countInventoryValue.text = uiState.data.count.toString()
+                    }
+                    is UiState.Failed -> {
+                        binding.progressBar.visibility = View.GONE
+                        binding.cardInventory.visibility = View.VISIBLE
+                        Toast.makeText(requireContext(),"faild",Toast.LENGTH_SHORT).show()
+                        Log.e ("HomeFragment","Error: ${uiState.msg.message}")
+                    }
+                }
+            }
+        }
+    }
 
     private fun observeCountOfProduct(){
 

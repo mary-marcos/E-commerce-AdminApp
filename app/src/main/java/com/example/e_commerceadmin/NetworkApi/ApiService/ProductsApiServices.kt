@@ -28,6 +28,14 @@ interface ProductsApiServices {
     @GET("products/count.json")
     suspend fun getCountOfProducts(): ProdCountResponse
 
+  @Headers("Content-Type:application/json", "X-Shopify-Access-Token:"+ Constants.Access_Token)
+  @GET("price_rules/count.json")
+  suspend fun getCountOfRules(): ProdCountResponse
+
+  @Headers("Content-Type:application/json", "X-Shopify-Access-Token:"+ Constants.Access_Token)
+  @GET("locations/count.json")
+  suspend fun getCountOfinventory(): ProdCountResponse
+
     @Headers("Content-Type:application/json", "X-Shopify-Access-Token:"+ Constants.Access_Token)
     @GET("products.json")
     suspend fun getProducts(): AllProductResponse

@@ -39,7 +39,13 @@ class Repository( private val remoteproductSource: IRemoteProductDataSource,) {
         }
     }
 
+     fun getCountOfRules() : Flow<ProdCountResponse> {
+         return remoteproductSource.getCountOfRules()
+    }
 
+     fun getCountOfinventory() : Flow<ProdCountResponse> {
+         return remoteproductSource.getCountOfinventory()
+    }
       fun getCountOfProducts(): Flow<ProdCountResponse> {
         return remoteproductSource.getProductsCount()
     }

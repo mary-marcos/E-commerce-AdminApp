@@ -1,5 +1,6 @@
 package com.example.e_commerceadmin.ui.home.coupons.RulesPrice
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -73,8 +74,8 @@ class AllRulesFragment : Fragment() {
             },
 
             onDeleteClick = { ruleItem ->
-                observeDeleteRule()
-                viewModel.deleteRule(ruleItem.id?:0L)
+               showDeleteConfirmationDialog(ruleItem)
+
             }
         )
 
@@ -144,6 +145,26 @@ class AllRulesFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun showDeleteConfirmationDialog(ruleItem:PriceRule) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Delete Confirmation")
+        builder.setMessage("Are you sure you want to delete?")
+
+        builder.setPositiveButton("Yes") { _, _ ->
+
+            observeDeleteRule()
+            viewModel.deleteRule(ruleItem.id?:0L)
+        }
+
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+
+            dialog.dismiss()
+        }
+        builder.setCancelable(false)
+        val alertDialog = builder.create()
+        alertDialog.show()
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.e_commerceadmin.ui.home.MyProducts.NewProduct
+package com.example.e_commerceadmin.ui.home.MyProducts.productinfo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,17 +8,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.e_commerceadmin.R
 import com.example.e_commerceadmin.databinding.ImgItemBinding
+import com.example.e_commerceadmin.databinding.ImgItemInfoBinding
 import com.example.e_commerceadmin.model.ProductModel.ImagesItem
-import com.example.e_commerceadmin.model.ProductModel.ProductItem
+import com.example.e_commerceadmin.ui.home.MyProducts.NewProduct.ImagesAdapter
 
-class ImagesAdapter(val onDeleteClick: (ImagesItem) -> Unit) : ListAdapter<ImagesItem, ImagesAdapter.AddImagesViewHolder>(AddImagesDiffUtil) {
+class imagesInfoAdapter : ListAdapter<ImagesItem, imagesInfoAdapter.AddImagesViewHolder>(AddImagesDiffUtil) {
 
-    class AddImagesViewHolder(val addImagesBinding: ImgItemBinding) :
+    class AddImagesViewHolder(val addImagesBinding: ImgItemInfoBinding) :
         RecyclerView.ViewHolder(addImagesBinding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddImagesViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val addImagesBinding = ImgItemBinding.inflate(inflater, parent, false)
+        val addImagesBinding = ImgItemInfoBinding.inflate(inflater, parent, false)
         return AddImagesViewHolder(addImagesBinding)
     }
 
@@ -33,9 +34,7 @@ class ImagesAdapter(val onDeleteClick: (ImagesItem) -> Unit) : ListAdapter<Image
                 .error(R.drawable.search_off)
                 .into(imageOfProductItem)
 
-            deleteImage.setOnClickListener {
-                onDeleteClick(current)
-            }
+
         }
     }
 }

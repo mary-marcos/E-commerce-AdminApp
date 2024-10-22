@@ -51,9 +51,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/description_input"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="458dp"
-                android:layout_height="116dp"
-
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:textColor="@color/amper"
                 app:boxStrokeColor="@color/amper"
@@ -61,7 +60,6 @@
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconTint="@color/amper"
                 app:layout_constraintEnd_toEndOf="@+id/title_input"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/title_input"
                 app:layout_constraintTop_toBottomOf="@+id/title_input">
 
@@ -71,9 +69,12 @@
                     android:layout_height="match_parent"
                     android:autofillHints="name"
                     android:hint="description body"
-                    android:inputType="text"
-                    android:maxLines="5"
-                    android:padding="2dp" />
+                    android:inputType="textMultiLine"
+                   android:maxLines="5"
+                  android:maxLength="300"
+                android:breakStrategy="high_quality"
+                android:scrollHorizontally="false"
+                android:padding="2dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,10 +84,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="choose the brand"
                 android:maxLength="40"
                 android:padding="20dp"
                 android:singleLine="true"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="choose the brand"
+                android:textColor="?attr/colorControlActivated"
                 app:layout_constraintEnd_toEndOf="@+id/description_input"
                 app:layout_constraintStart_toStartOf="@+id/description_input"
                 app:layout_constraintTop_toBottomOf="@id/description_input" />
@@ -111,11 +115,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="37dp"
-
-                android:text="choose the category"
-                android:maxLength="40"
+                android:textStyle="bold"
+            android:textSize="18sp"
+            android:maxLength="40"
                 android:padding="20dp"
                 android:singleLine="true"
+                android:text="choose the category"
+                android:textColor="?attr/colorControlActivated"
                 app:layout_constraintEnd_toEndOf="@+id/spinner_brand"
                 app:layout_constraintStart_toStartOf="@+id/spinner_brand"
                 app:layout_constraintTop_toTopOf="@+id/spinner_brand" />

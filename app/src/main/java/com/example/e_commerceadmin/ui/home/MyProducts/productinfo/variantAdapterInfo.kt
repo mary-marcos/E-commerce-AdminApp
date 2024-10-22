@@ -1,4 +1,4 @@
-package com.example.e_commerceadmin.ui.home.MyProducts.NewProduct
+package com.example.e_commerceadmin.ui.home.MyProducts.productinfo
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,17 +7,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerceadmin.databinding.SpecificationItemBinding
-import com.example.e_commerceadmin.model.ProductModel.ImagesItem
+import com.example.e_commerceadmin.databinding.VariantItemInfoBinding
 import com.example.e_commerceadmin.model.ProductModel.VariantsItem
+import com.example.e_commerceadmin.ui.home.MyProducts.NewProduct.variantAdapter
 
-class variantAdapter(val onDeleteClick: (VariantsItem) -> Unit)  : ListAdapter<VariantsItem, variantAdapter.VariantsViewHolder>(VariantsDiffUtil) {
-    class VariantsViewHolder(val variantItemBinding: SpecificationItemBinding)
+class variantAdapterInfo() : ListAdapter<VariantsItem, variantAdapterInfo.VariantsViewHolder>(VariantsDiffUtil) {
+    class VariantsViewHolder(val variantItemBinding: VariantItemInfoBinding)
         : RecyclerView.ViewHolder(variantItemBinding.root)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VariantsViewHolder {
         val inflater: LayoutInflater =
             parent.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-        val variantsItemBinding = SpecificationItemBinding.inflate(inflater, parent,false)
+        val variantsItemBinding = VariantItemInfoBinding.inflate(inflater, parent,false)
         return VariantsViewHolder(variantsItemBinding)
     }
 
@@ -27,9 +28,7 @@ class variantAdapter(val onDeleteClick: (VariantsItem) -> Unit)  : ListAdapter<V
         holder.variantItemBinding.colorName.text = current.title
         holder.variantItemBinding.colorPrice.text = "Price: ${current.price}"
 
-        holder.variantItemBinding.deleteVariant.setOnClickListener {
-            onDeleteClick(current)
-        }
+
     }
 }
 

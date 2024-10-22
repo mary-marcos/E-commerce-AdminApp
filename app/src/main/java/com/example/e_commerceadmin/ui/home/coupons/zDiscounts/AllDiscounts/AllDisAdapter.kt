@@ -49,9 +49,9 @@ class AllDisAdapter(val onClick:(DiscountCode)-> Unit,
 
 
         }
-        holder.binding.editImage.setOnClickListener {
-            onClick(current)
-        }
+//        holder.binding.editImage.setOnClickListener {
+//            onClick(current)
+//        }
 
         holder.binding.deleteImage.setOnClickListener {
             onDeleteClick(current)

@@ -16,6 +16,8 @@ import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 interface IRemoteProductDataSource {
+    fun getCountOfRules():Flow<ProdCountResponse>
+    fun getCountOfinventory():Flow<ProdCountResponse>
     fun getCustomerByEmail(email:String): Flow<CustomersByEmailResponse>
     fun getProductsCount(): Flow<ProdCountResponse>
     fun getAllProducts(): Flow<AllProductResponse>

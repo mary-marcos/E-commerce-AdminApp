@@ -88,7 +88,7 @@
                 android:backgroundTint="@color/blue2"
                 android:paddingVertical="16dp"
                 android:text="confirm"
-
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/imgs_input"
                 app:layout_constraintHorizontal_bias="0.846"
@@ -104,6 +104,7 @@
                 android:layout_marginTop="12dp"
                 android:backgroundTint="@color/blue2"
                 android:paddingVertical="16dp"
+                android:textColor="@color/white"
                 android:text="add image"
 
                 android:textStyle="bold"

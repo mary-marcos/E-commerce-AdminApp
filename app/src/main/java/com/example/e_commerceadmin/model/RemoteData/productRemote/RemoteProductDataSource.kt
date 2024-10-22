@@ -2,6 +2,7 @@ package com.example.e_commerceadmin.model.RemoteData.productRemote
 
 import com.example.e_commerceadmin.NetworkApi.ApiService.ProductsApiServices
 import com.example.e_commerceadmin.NetworkApi.NetworkRetrofit
+import com.example.e_commerceadmin.constant.Constants
 import com.example.e_commerceadmin.model.CoponsModel.DiscountCode
 import com.example.e_commerceadmin.model.CoponsModel.DiscountCodeRequest
 import com.example.e_commerceadmin.model.CoponsModel.DiscountCodeResponse
@@ -11,10 +12,13 @@ import com.example.e_commerceadmin.model.CoponsModel.PriceRuleResponse
 import com.example.e_commerceadmin.model.CoponsModel.PriceRuleResponsePost
 import com.example.e_commerceadmin.model.CustomersByEmailResponse
 import com.example.e_commerceadmin.model.ProductModel.OneProductsResponse
+import com.example.e_commerceadmin.model.ProductModel.ProdCountResponse
 import com.example.e_commerceadmin.model.ProductModel.ProductBody
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Path
 
 
@@ -37,6 +41,17 @@ class RemoteProductDataSource(private val productService: ProductsApiServices) :
    override fun getProductsCount() = flow {
         emit(productService.getCountOfProducts())
     }
+
+    override fun getCountOfRules() = flow {
+        emit(productService.getCountOfRules())
+    }
+    override fun getCountOfinventory() = flow {
+        emit(productService.getCountOfinventory())
+    }
+
+
+
+
 
      override fun getAllProducts()= flow {
         emit(productService.getProducts())

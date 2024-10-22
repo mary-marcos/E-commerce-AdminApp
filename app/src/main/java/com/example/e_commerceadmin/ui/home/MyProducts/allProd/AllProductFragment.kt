@@ -1,5 +1,6 @@
 package com.example.e_commerceadmin.ui.home.MyProducts.allProd
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -74,8 +75,7 @@ class AllProductFragment : Fragment() {
 
             },
             onDeleteClick = { productItem ->
-                observeDeleteProd()
-           viewModel.deleteProd(productItem.id?:0L)
+               showDeleteConfirmationDialog(productItem)
             }
         )
         binding.floatAddNewProd.setOnClickListener {
@@ -174,6 +174,25 @@ class AllProductFragment : Fragment() {
         }
     }
 
+    private fun showDeleteConfirmationDialog(productItem:ProductItem) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Delete Confirmation")
+        builder.setMessage("Are you sure you want to delete?")
+
+        builder.setPositiveButton("Yes") { _, _ ->
+
+            observeDeleteProd()
+            viewModel.deleteProd(productItem.id?:0L)
+        }
+
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+
+            dialog.dismiss()
+        }
+        builder.setCancelable(false)
+        val alertDialog = builder.create()
+        alertDialog.show()
+    }
 
 
 }

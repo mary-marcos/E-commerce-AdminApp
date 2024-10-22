@@ -16,9 +16,17 @@ class HomeViewModel(var repo:Repository) :ViewModel(){
     private val _productCount = MutableStateFlow<UiState<ProdCountResponse>>(UiState.Loading())
     val productCount: StateFlow<UiState<ProdCountResponse>> = _productCount
 
+    private val _ruleCount = MutableStateFlow<UiState<ProdCountResponse>>(UiState.Loading())
+    val ruleCount: StateFlow<UiState<ProdCountResponse>> = _ruleCount
+
+    private val _inventoryCount = MutableStateFlow<UiState<ProdCountResponse>>(UiState.Loading())
+    val inventoryCount: StateFlow<UiState<ProdCountResponse>> = _inventoryCount
+
 
     init {
         getProductCount()
+        getInventoryCount()
+        getRulesCount()
     }
 
     private fun getProductCount() {
@@ -30,6 +38,36 @@ class HomeViewModel(var repo:Repository) :ViewModel(){
                 }
                 .collect { cou ->
                     _productCount.value = UiState.Success(cou)
+                }
+        }
+    }
+
+
+
+    private fun getRulesCount() {
+        viewModelScope.launch {
+            repo.getCountOfRules()
+                .catch { e ->
+                    _ruleCount.value = UiState.Failed(e)
+                    Log.e("HomeViewModel", "Error fetching rules count: ${e.message}")
+                }
+                .collect { cou ->
+                    _ruleCount.value = UiState.Success(cou)
+                }
+        }
+    }
+
+
+
+    private fun getInventoryCount() {
+        viewModelScope.launch {
+            repo.getCountOfinventory()
+                .catch { e ->
+                    _inventoryCount.value = UiState.Failed(e)
+                    Log.e("HomeViewModel", "Error fetching product count: ${e.message}")
+                }
+                .collect { cou ->
+                    _inventoryCount.value = UiState.Success(cou)
                 }
         }
     }

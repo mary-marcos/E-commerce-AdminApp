@@ -64,4 +64,7 @@ dependencies {
 //    implementation ("androidx.navigation:navigation-ui:2.7.6")
 
     implementation ("com.squareup.picasso:picasso:2.71828")
+
+//    //ImageSlider
+//    implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2")
 }

@@ -69,6 +69,7 @@
                 android:layout_marginTop="16dp"
                 android:backgroundTint="@color/blue2"
                 android:paddingVertical="16dp"
+                android:textColor="@color/white"
                 android:text="cancel"
 
                 android:textStyle="bold"
@@ -87,6 +88,7 @@
                 android:backgroundTint="@color/blue2"
                 android:paddingVertical="16dp"
                 android:text="add code"
+                android:textColor="@color/white"
 
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/imgs_input"

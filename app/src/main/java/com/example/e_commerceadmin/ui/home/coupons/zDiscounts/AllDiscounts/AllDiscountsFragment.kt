@@ -1,5 +1,6 @@
 package com.example.e_commerceadmin.ui.home.coupons.zDiscounts.AllDiscounts
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
@@ -20,8 +21,10 @@ import androidx.viewbinding.ViewBindings
 import com.example.e_commerceadmin.R
 import com.example.e_commerceadmin.databinding.FragmentAllDiscountsBinding
 import com.example.e_commerceadmin.databinding.FragmentAllRulesBinding
+import com.example.e_commerceadmin.model.CoponsModel.DiscountCode
 import com.example.e_commerceadmin.model.CoponsModel.DiscountCodeRequest
 import com.example.e_commerceadmin.model.CoponsModel.OneItemCode
+import com.example.e_commerceadmin.model.CoponsModel.PriceRule
 import com.example.e_commerceadmin.model.ProductModel.ImagesItem
 import com.example.e_commerceadmin.model.RemoteData.productRemote.RemoteProductDataSource
 import com.example.e_commerceadmin.model.Repository.Repository
@@ -80,8 +83,7 @@ class AllDiscountsFragment : Fragment() {
             },
 
             onDeleteClick = { disItem ->
-                observeDeleteDisc()
-                viewModel.deleteDiscount(ruleIdd,disItem.id?:0L)
+               showDeleteConfirmationDialog(disItem)
             }
         )
 
@@ -246,5 +248,23 @@ class AllDiscountsFragment : Fragment() {
         }
     }
 
+    private fun showDeleteConfirmationDialog(disItem: DiscountCode) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Delete Confirmation")
+        builder.setMessage("Are you sure you want to delete?")
 
+        builder.setPositiveButton("Yes") { _, _ ->
+
+            observeDeleteDisc()
+            viewModel.deleteDiscount(ruleIdd,disItem.id?:0L)
+        }
+
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+
+            dialog.dismiss()
+        }
+        builder.setCancelable(false)
+        val alertDialog = builder.create()
+        alertDialog.show()
+    }
 }
